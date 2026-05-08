@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrendX — Trending News → X Posts</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">𝕏</span>
+        <div>
+          <span class="logo-text">TrendX</span>
+          <span class="logo-sub">Trending News → Ready-to-Post</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="lastUpdated" class="last-updated"></span>
+        <button id="refreshBtn" class="btn btn-ghost" onclick="loadNews()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main ── -->
+  <main class="main">
+
+    <!-- ── Filter Bar ── -->
+    <section class="filter-bar card">
+      <div class="filter-row">
+        <!-- Categories -->
+        <div class="filter-group">
+          <label class="filter-label">Categories</label>
+          <div class="toggle-group">
+            <button class="toggle active" data-cat="tech" onclick="toggleCat(this)">
+              💻 Tech
+            </button>
+            <button class="toggle active" data-cat="world" onclick="toggleCat(this)">
+              🌍 World
+            </button>
+            <button class="toggle active" data-cat="business" onclick="toggleCat(this)">
+              📈 Business
+            </button>
+          </div>
+        </div>
+
+        <!-- Sort -->
+        <div class="filter-group">
+          <label class="filter-label">Sort by</label>
+          <select id="sortBy" class="select" onchange="loadNews()">
+            <option value="trending">🔥 Trending Score</option>
+            <option value="recency">🕐 Most Recent</option>
+            <option value="source">📰 By Source</option>
+          </select>
+        </div>
+
+        <!-- Keyword -->
+        <div class="filter-group flex-1">
+          <label class="filter-label">Keyword Filter</label>
+          <div class="search-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="keyword" type="text" class="input" placeholder="e.g. AI, bitcoin, war..." oninput="debounceLoad()" />
+          </div>
+        </div>
+
+        <!-- Apply -->
+        <div class="filter-group">
+          <label class="filter-label">&nbsp;</label>
+          <button class="btn btn-primary" onclick="loadNews()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            Filter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Content Area ── -->
+    <div class="content-layout">
+
+      <!-- ── Left: News Articles ── -->
+      <section class="news-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">Trending Articles</h2>
+            <span id="newsCount" class="badge">Loading...</span>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-sm btn-ghost" onclick="selectAll()">Select All</button>
+            <button class="btn btn-sm btn-ghost" onclick="selectNone()">Clear</button>
+            <button class="btn btn-sm btn-ghost" onclick="selectTop40()">Top 40</button>
+          </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="newsLoading" class="loading-wrap">
+          <div class="spinner"></div>
+          <p>Fetching trending news from across the web…</p>
+        </div>
+
+        <!-- Error -->
+        <div id="newsError" class="error-wrap hidden">
+          <span class="error-icon">⚠️</span>
+          <p id="newsErrorMsg">Failed to load news.</p>
+          <button class="btn btn-sm btn-primary" onclick="loadNews()">Try Again</button>
+        </div>
+
+        <!-- News list -->
+        <div id="newsList" class="news-list hidden"></div>
+
+        <!-- Empty -->
+        <div id="newsEmpty" class="empty-wrap hidden">
+          <span>🔍</span>
+          <p>No articles found for these filters.</p>
+        </div>
+      </section>
+
+      <!-- ── Right: X Posts Panel ── -->
+      <section class="posts-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">X Posts</h2>
+            <span id="postsCount" class="badge badge-blue">0 / 40</span>
+          </div>
+          <div class="panel-actions">
+            <button id="generateBtn" class="btn btn-primary" onclick="generatePosts()" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              Generate Posts
+            </button>
+            <button id="copyAllBtn" class="btn btn-sm btn-ghost hidden" onclick="copyAll()">
+              📋 Copy All
+            </button>
+            <button id="exportBtn" class="btn btn-sm btn-ghost hidden" onclick="exportPosts()">
+              💾 Export .txt
+            </button>
+          </div>
+        </div>
+
+        <!-- Posts placeholder -->
+        <div id="postsPlaceholder" class="posts-placeholder">
+          <div class="placeholder-icon">𝕏</div>
+          <p class="placeholder-title">Select articles → Generate Posts</p>
+          <p class="placeholder-sub">Pick up to 40 articles from the left panel, then hit "Generate Posts" to create ready-to-post X content.</p>
+        </div>
+
+        <!-- Posts loading -->
+        <div id="postsLoading" class="loading-wrap hidden">
+          <div class="spinner"></div>
+          <p>Generating your X posts…</p>
+        </div>
+
+        <!-- Posts list -->
+        <div id="postsList" class="posts-list hidden"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ── Toast ── -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
