@@ -6,6 +6,14 @@ The current demo uses X posts as the output format because they are short, const
 
 Live demo: https://cvbnm122668-web.github.io/trendx/
 
+# TrendX: Source-Grounded Trend Monitoring and Review Workflow
+
+TrendX is a browser-based system for monitoring public web trends and converting selected articles into concise, source-linked draft outputs for human review.
+
+The current demo uses X posts as the output format because they are short, constrained, and easy to inspect. The broader goal is to test an evidence-to-output workflow: collect public signals, rank and filter noisy sources, preserve attribution, generate concise drafts, and keep a human in the review loop.
+
+**Live demo:** https://cvbnm122668-web.github.io/trendx/
+
 ## Overview
 
 TrendX helps users move from noisy public information to reviewable, source-grounded outputs.
@@ -18,6 +26,7 @@ Public Sources
 -> Human Selection
 -> Draft Generation
 -> Edit, Copy, or Export
+
 
 
 
@@ -100,3 +109,4 @@ Positioning
 TrendX demonstrates an end-to-end evidence workflow: collecting public signals, ranking noisy sources, preserving attribution, generating concise outputs, and designing a review interface for human oversight.
 
 The most relevant contribution is not the post template itself, but the workflow around evidence collection, source grounding, output review, and extensibility toward RAG evaluation.
+```
