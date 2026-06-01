@@ -14,7 +14,7 @@ The current demo uses X posts as the output format because they are short, const
 
 **Live demo:** https://cvbnm122668-web.github.io/trendx/
 
-## Overview
+# Overview
 
 TrendX helps users move from noisy public information to reviewable, source-grounded outputs.
 
@@ -73,7 +73,7 @@ The GitHub Pages version is intentionally lightweight:
 index.html
 style.css
 app.js
-All core logic runs in the browser:
+
 
 data fetching
 filtering
