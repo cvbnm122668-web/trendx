@@ -63,13 +63,13 @@ This makes the interface useful for studying source-grounded generation, evidenc
 System Design
 The GitHub Pages version is intentionally lightweight:
 
-````markdown
+```text
 
 index.html
 style.css
 app.js
 
-```text
+```
 
 
 data fetching
