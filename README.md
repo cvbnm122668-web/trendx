@@ -105,5 +105,5 @@ Connect the review interface to RAG benchmark construction and evaluation dashbo
 Positioning
 TrendX demonstrates an end-to-end evidence workflow: collecting public signals, ranking noisy sources, preserving attribution, generating concise outputs, and designing a review interface for human oversight.
 
-The most relevant contribution is not the post template itself, but the workflow around evidence collection, source grounding, output review, and extensibility toward RAG evaluation.
+The most relevant contribution is the workflow around evidence collection, source grounding, output review, and extensibility toward RAG evaluation.
 
